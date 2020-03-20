@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>dist/css/app.5c9713c3.css</file>
+        <file>dist/js/about.6b80c3c6.js</file>
+        <file>dist/js/about.6b80c3c6.js.map</file>
+        <file>dist/js/app.64d42aaf.js</file>
+        <file>dist/js/app.64d42aaf.js.map</file>
+        <file>dist/js/chunk-vendors.59058390.js</file>
+        <file>dist/js/chunk-vendors.59058390.js.map</file>
+        <file>dist/favicon.ico</file>
+        <file>dist/index.html</file>
+    </qresource>
+</RCC>

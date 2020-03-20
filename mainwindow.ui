@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>748</width>
+    <height>602</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="mainView">
+   <widget class="QSplitter" name="mainContent">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>751</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <widget class="QFrame" name="webView">
+     <property name="minimumSize">
+      <size>
+       <width>300</width>
+       <height>300</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QTextBrowser" name="msgBrowser"/>
+     <widget class="QWidget" name="layoutWidget">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QTextEdit" name="sendEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="sendBtn">
+         <property name="text">
+          <string>Send</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>748</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuQTServer">
+    <property name="title">
+     <string>QTServer</string>
+    </property>
+    <addaction name="actionSendMsg"/>
+   </widget>
+   <addaction name="menuQTServer"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSendMsg">
+   <property name="text">
+    <string>SendMsg</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
