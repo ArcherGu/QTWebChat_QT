@@ -90,6 +90,6 @@ void MainWindow::on_sendBtn_clicked()
 void MainWindow::OnReceiveMessageFromJS(QString strParameter) {
     QString history = ui->msgBrowser->toPlainText();
     QString time = QDate::currentDate().toString("yyyy-MM-dd ") + QTime::currentTime().toString("HH:mm:ss");
-    history += "[" + time + "]" + "QT: " + strParameter + "\n";
+    history += "[" + time + "]" + "JS: " + strParameter + "\n";
     ui->msgBrowser->setText(history);
 }
