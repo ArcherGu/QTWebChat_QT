@@ -17,10 +17,10 @@
    <widget class="QSplitter" name="mainContent">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>751</width>
-      <height>551</height>
+      <x>10</x>
+      <y>10</y>
+      <width>731</width>
+      <height>541</height>
      </rect>
     </property>
     <property name="orientation">
@@ -29,7 +29,7 @@
     <widget class="QFrame" name="webView">
      <property name="minimumSize">
       <size>
-       <width>300</width>
+       <width>260</width>
        <height>300</height>
       </size>
      </property>
@@ -41,23 +41,41 @@
      </property>
     </widget>
     <widget class="QSplitter" name="splitter">
+     <property name="minimumSize">
+      <size>
+       <width>260</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QTextBrowser" name="msgBrowser"/>
-     <widget class="QWidget" name="layoutWidget">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QTextEdit" name="sendEdit"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="sendBtn">
-         <property name="text">
-          <string>Send</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <widget class="QTextBrowser" name="msgBrowser">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>400</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="sendEdit">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="sendBtn">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Send</string>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -71,15 +89,7 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuQTServer">
-    <property name="title">
-     <string>QTServer</string>
-    </property>
-    <addaction name="actionSendMsg"/>
-   </widget>
-   <addaction name="menuQTServer"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSendMsg">
    <property name="text">
     <string>SendMsg</string>

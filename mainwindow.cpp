@@ -17,10 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     customContextMenu();
 
-
-
-
-
     QWebChannel *channel = new QWebChannel(this);
     webBridge = new WebBridge();
     channel->registerObject(QStringLiteral("context"), webBridge);
@@ -72,7 +68,7 @@ void MainWindow::customContextMenu()
 
 void MainWindow::resizeEvent(QResizeEvent *)
 {
-    ui->mainContent->resize(this->size());
+    ui->mainContent->resize(this->width() - 20, this->height() - 20);
 }
 
 void MainWindow::on_sendBtn_clicked()
