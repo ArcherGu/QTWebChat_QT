@@ -114,6 +114,8 @@ void MainWindow::OnReceiveMessageFromJS(QString strParameter) {
     QString time = QDate::currentDate().toString("yyyy-MM-dd ") + QTime::currentTime().toString("HH:mm:ss");
     history += "[" + time + "]" + "JS: " + strParameter + "\n";
     ui->msgBrowser->setText(history);
+
+    serial->write(strParameter.toUtf8());
 }
 
 void MainWindow::OnReceiveMessageFromSerial() {
