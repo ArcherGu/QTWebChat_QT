@@ -19,7 +19,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent *);
 private:
-    Ui::DevWindow *ui;
+    Ui::DevWindow* ui;
     QWebEngineView* devView;
 };
 

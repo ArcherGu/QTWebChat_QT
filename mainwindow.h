@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QWebEngineView>
+#include <QSerialPort>
 #include "devwindow.h"
 #include "webbridge.h"
 
@@ -23,11 +24,13 @@ protected:
 private slots:
     void on_sendBtn_clicked();
     void OnReceiveMessageFromJS(QString strParameter);
+    void OnReceiveMessageFromSerial();
 
 private:
-    Ui::MainWindow *ui;
-    QWebEngineView *web;
-    DevWindow *devWindow = NULL;
-    WebBridge *webBridge;
+    Ui::MainWindow* ui;
+    QWebEngineView* web;
+    DevWindow* devWindow = NULL;
+    WebBridge* webBridge;
+    QSerialPort* serial;
 };
 #endif // MAINWINDOW_H

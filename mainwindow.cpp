@@ -1,8 +1,10 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QStackedLayout>
 #include <QWebChannel>
 #include <QMessageBox>
+#include <QSerialPort>
+#include <QSerialPortInfo>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,22 +13,42 @@ MainWindow::MainWindow(QWidget *parent)
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
     ui->setupUi(this);
     web = new QWebEngineView(this);
-    QStackedLayout *layout = new QStackedLayout(ui->webView);
+    QStackedLayout* layout = new QStackedLayout(ui->webView);
     ui->webView->setLayout(layout);
     layout->addWidget(web);
 
     customContextMenu();
 
-    QWebChannel *channel = new QWebChannel(this);
+    QWebChannel* channel = new QWebChannel(this);
     webBridge = new WebBridge();
     channel->registerObject(QStringLiteral("context"), webBridge);
     web->page()->setWebChannel(channel);
     connect(webBridge, &WebBridge::SigReceviceMessageFromJS, this, &MainWindow::OnReceiveMessageFromJS);
     web->load(QUrl("qrc:///dist/index.html"));
+
+    //创建串口对象
+    serial = new QSerialPort(this);
+    //设置串口名
+    serial->setPortName("COM1");
+    //设置波特率
+    serial->setBaudRate(QSerialPort::Baud115200);
+    //设置数据位数
+    serial->setDataBits(QSerialPort::Data8);
+    //设置奇偶校验
+    serial->setParity(QSerialPort::NoParity);
+    //设置停止位
+    serial->setStopBits(QSerialPort::OneStop);
+    //设置流控制
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+    //打开串口
+    serial->open(QIODevice::ReadWrite);
+
+    connect(serial, &QSerialPort::readyRead, this, &MainWindow::OnReceiveMessageFromSerial);
 }
 
 MainWindow::~MainWindow()
 {
+    serial->close();
     delete ui;
 }
 
@@ -91,5 +113,13 @@ void MainWindow::OnReceiveMessageFromJS(QString strParameter) {
     QString history = ui->msgBrowser->toPlainText();
     QString time = QDate::currentDate().toString("yyyy-MM-dd ") + QTime::currentTime().toString("HH:mm:ss");
     history += "[" + time + "]" + "JS: " + strParameter + "\n";
+    ui->msgBrowser->setText(history);
+}
+
+void MainWindow::OnReceiveMessageFromSerial() {
+    QByteArray buffer = serial->readAll();
+    QString history = ui->msgBrowser->toPlainText();
+    QString time = QDate::currentDate().toString("yyyy-MM-dd ") + QTime::currentTime().toString("HH:mm:ss");
+    history += "[" + time + "]" + "UART: " + QString(buffer) + "\n";
     ui->msgBrowser->setText(history);
 }
