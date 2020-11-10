@@ -10,50 +10,41 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
     ui->setupUi(this);
-    web = new QWebEngineView(this);
     QStackedLayout* layout = new QStackedLayout(ui->webView);
     ui->webView->setLayout(layout);
+    web = new QWebEngineView(this);
     layout->addWidget(web);
 
-    customContextMenu();
-
-    QWebChannel* channel = new QWebChannel(this);
-    webBridge = new WebBridge();
-    channel->registerObject(QStringLiteral("context"), webBridge);
-    web->page()->setWebChannel(channel);
-    connect(webBridge, &WebBridge::SigReceviceMessageFromJS, this, &MainWindow::OnReceiveMessageFromJS);
-    web->load(QUrl("qrc:///dist/index.html"));
-
-    //创建串口对象
-    serial = new QSerialPort(this);
-    //设置串口名
-    serial->setPortName("COM1");
-    //设置波特率
-    serial->setBaudRate(QSerialPort::Baud115200);
-    //设置数据位数
-    serial->setDataBits(QSerialPort::Data8);
-    //设置奇偶校验
-    serial->setParity(QSerialPort::NoParity);
-    //设置停止位
-    serial->setStopBits(QSerialPort::OneStop);
-    //设置流控制
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-    //打开串口
-    serial->open(QIODevice::ReadWrite);
-
-    connect(serial, &QSerialPort::readyRead, this, &MainWindow::OnReceiveMessageFromSerial);
+    initWebEngine();
+    initDevToolWindow();
+    initSerialPort();
 }
 
 MainWindow::~MainWindow()
 {
     serial->close();
     delete ui;
+    delete web;
+    delete devWindow;
+    delete webBridge;
+    delete channel;
+    delete serial;
 }
 
-void MainWindow::customContextMenu()
+void MainWindow::initWebEngine()
 {
+    channel = new QWebChannel(this);
+    webBridge = new WebBridge();
+    channel->registerObject(QStringLiteral("context"), webBridge);
+    web->page()->setWebChannel(channel);
+    connect(webBridge, &WebBridge::SigReceviceMessageFromJS, this, &MainWindow::OnReceiveMessageFromJS);
+    web->load(QUrl("qrc:///dist/index.html"));
+}
+
+void MainWindow::initDevToolWindow()
+{
+    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
     web->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(web, &QWidget::customContextMenuRequested, this, [this]() {
@@ -86,6 +77,28 @@ void MainWindow::customContextMenu()
 
         menu->exec(QCursor::pos());
     });
+}
+
+void MainWindow::initSerialPort()
+{
+    //创建串口对象
+    serial = new QSerialPort(this);
+    //设置串口名
+    serial->setPortName("COM1");
+    //设置波特率
+    serial->setBaudRate(QSerialPort::Baud115200);
+    //设置数据位数
+    serial->setDataBits(QSerialPort::Data8);
+    //设置奇偶校验
+    serial->setParity(QSerialPort::NoParity);
+    //设置停止位
+    serial->setStopBits(QSerialPort::OneStop);
+    //设置流控制
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+    //打开串口
+    serial->open(QIODevice::ReadWrite);
+
+    connect(serial, &QSerialPort::readyRead, this, &MainWindow::OnReceiveMessageFromSerial);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *)

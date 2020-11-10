@@ -20,7 +20,9 @@ public:
     ~MainWindow();
 protected:
     void resizeEvent(QResizeEvent *);
-    void customContextMenu();
+    void initWebEngine();
+    void initDevToolWindow();
+    void initSerialPort();
 private slots:
     void on_sendBtn_clicked();
     void OnReceiveMessageFromJS(QString strParameter);
@@ -31,6 +33,7 @@ private:
     QWebEngineView* web;
     DevWindow* devWindow = NULL;
     WebBridge* webBridge;
+    QWebChannel* channel;
     QSerialPort* serial;
 };
 #endif // MAINWINDOW_H
