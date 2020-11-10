@@ -9,11 +9,10 @@ class WebBridge: public QObject
     Q_OBJECT
     public:
         WebBridge();
-//        Q_INVOKABLE void JSSendMessage(QString strParameter);
+        void QTSendMessage(QString strParameter);
 
     public slots:
         void invokedByClient();
-        void QTSendMessage(QString strParameter);
         QString JSSendMessage(QString strParameter);
 
     signals:

@@ -1,16 +1,16 @@
 <RCC>
     <qresource prefix="/">
-        <file>dist/css/app.5c9713c3.css</file>
-        <file>dist/css/chunk-vendors.d39e9fad.css</file>
-        <file>dist/fonts/element-icons.535877f5.woff</file>
-        <file>dist/fonts/element-icons.732389de.ttf</file>
-        <file>dist/js/about.44999daf.js</file>
-        <file>dist/js/about.44999daf.js.map</file>
-        <file>dist/js/app.66e6fff3.js</file>
-        <file>dist/js/app.66e6fff3.js.map</file>
-        <file>dist/js/chunk-vendors.eab7e702.js</file>
-        <file>dist/js/chunk-vendors.eab7e702.js.map</file>
         <file>dist/favicon.ico</file>
         <file>dist/index.html</file>
+        <file>dist/js/about.f3fc5b9d.js</file>
+        <file>dist/js/about.f3fc5b9d.js.map</file>
+        <file>dist/js/app.5093ec59.js</file>
+        <file>dist/js/app.5093ec59.js.map</file>
+        <file>dist/js/chunk-vendors.55b67e9d.js</file>
+        <file>dist/js/chunk-vendors.55b67e9d.js.map</file>
+        <file>dist/fonts/element-icons.535877f5.woff</file>
+        <file>dist/fonts/element-icons.732389de.ttf</file>
+        <file>dist/css/app.4eefdf34.css</file>
+        <file>dist/css/chunk-vendors.43fc3011.css</file>
     </qresource>
 </RCC>
