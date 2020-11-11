@@ -110,7 +110,7 @@ void MainWindow::on_sendBtn_clicked()
 {
     QString str = ui->sendEdit->toPlainText();
     if(!str.isEmpty()) {
-        webBridge->QTSendMessage(str);
+        webBridge->sendMsgToJs(str);
         ui->sendEdit->setText("");
         QString history = ui->msgBrowser->toPlainText();
         QString time = QDate::currentDate().toString("yyyy-MM-dd ") + QTime::currentTime().toString("HH:mm:ss");

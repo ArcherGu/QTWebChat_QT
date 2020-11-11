@@ -9,14 +9,14 @@ class WebBridge: public QObject
     Q_OBJECT
     public:
         WebBridge();
-        void QTSendMessage(QString strParameter);
+        void sendMsgToJs(QString strParameter);
 
     public slots:
-        void invokedByClient();
-        QString JSSendMessage(QString strParameter);
+        void invoked_by_client();
+        QString send_msg(QString strParameter);
 
     signals:
-        void SigSendMessageToJS(QString strParameter);
+        void SigReceviceMessageFromQT(QString strParameter);
         void SigReceviceMessageFromJS(QString strParameter);
 };
 

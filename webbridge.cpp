@@ -7,19 +7,19 @@ WebBridge::WebBridge()
 
 }
 
-void WebBridge::invokedByClient()
+void WebBridge::invoked_by_client()
 {
     QMessageBox::information(NULL,"invokedByClient","I'm called by client JS!");
 }
 
-QString WebBridge::JSSendMessage(QString strParameter)
+QString WebBridge::send_msg(QString strParameter)
 {
     emit SigReceviceMessageFromJS(strParameter);
 
     return QString("收到消息了！");
 }
 
-void WebBridge::QTSendMessage(QString strParameter)
+void WebBridge::sendMsgToJs(QString strParameter)
 {
-    emit SigSendMessageToJS(strParameter);
+    emit SigReceviceMessageFromQT(strParameter);
 }
