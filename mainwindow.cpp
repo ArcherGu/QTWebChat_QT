@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
     ui->setupUi(this);
     QStackedLayout* layout = new QStackedLayout(ui->webView);
     ui->webView->setLayout(layout);
@@ -44,12 +45,11 @@ void MainWindow::initWebEngine()
 
 void MainWindow::initDevToolWindow()
 {
-    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
     web->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(web, &QWidget::customContextMenuRequested, this, [this]() {
         QMenu* menu = new QMenu(this);
-        QAction* devTool = menu->addAction("开发者工具");
+        QAction* devTool = menu->addAction("Dev Tools");
         connect(devTool, &QAction::triggered, this, [this](){
             if (devWindow == NULL) {
                 devWindow = new DevWindow();
@@ -60,17 +60,17 @@ void MainWindow::initDevToolWindow()
             }
         });
 
-        QAction* pageRefresh = menu->addAction("刷新");
+        QAction* pageRefresh = menu->addAction("Refresh");
         connect(pageRefresh, &QAction::triggered, this, [this](){
             web->page()->triggerAction(QWebEnginePage::Reload);
         });
 
-        QAction* routeBack = menu->addAction("后退");
+        QAction* routeBack = menu->addAction("Back");
         connect(routeBack, &QAction::triggered, this, [this](){
             web->page()->triggerAction(QWebEnginePage::Back);
         });
 
-        QAction* routeForward = menu->addAction("前进");
+        QAction* routeForward = menu->addAction("Previous");
         connect(routeForward, &QAction::triggered, this, [this](){
             web->page()->triggerAction(QWebEnginePage::Forward);
         });
