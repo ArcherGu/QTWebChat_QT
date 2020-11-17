@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,18 +18,25 @@ MainWindow::MainWindow(QWidget *parent)
     web = new QWebEngineView(this);
     layout->addWidget(web);
 
+    initWorkerThread();
     initWebEngine();
     initDevToolWindow();
     initSerialPort();
 }
 
 MainWindow::~MainWindow()
-{
+{ 
+    if(threadWorker->isRunning())
+    {
+        threadWorker->quit();
+    }
+    threadWorker->wait();
+
     serial->close();
     delete ui;
     delete web;
     delete devWindow;
-    delete webBridge;
+    delete apiRouter;
     delete channel;
     delete serial;
 }
@@ -36,11 +44,22 @@ MainWindow::~MainWindow()
 void MainWindow::initWebEngine()
 {
     channel = new QWebChannel(this);
-    webBridge = new WebBridge();
-    channel->registerObject(QStringLiteral("context"), webBridge);
+    connect(apiRouter, &ApiRouter::receiveMsgFromClient, this, &MainWindow::OnReceiveMessageFromJS);
+    channel->registerObject(QStringLiteral("context"), apiRouter);
     web->page()->setWebChannel(channel);
-    connect(webBridge, &WebBridge::SigReceviceMessageFromJS, this, &MainWindow::OnReceiveMessageFromJS);
     web->load(QUrl("qrc:///dist/index.html"));
+}
+
+void MainWindow::initWorkerThread()
+{
+    threadWorker = new QThread();
+    worker = new Worker();
+    worker->moveToThread(threadWorker);
+    apiRouter = new ApiRouter(worker);
+    connect(threadWorker, &QThread::finished, threadWorker, &QObject::deleteLater);
+    connect(threadWorker, &QThread::finished, worker, &QObject::deleteLater);
+    connect(threadWorker, &QThread::started, worker, &Worker::doTask);
+    threadWorker->start();
 }
 
 void MainWindow::initDevToolWindow()
@@ -110,7 +129,7 @@ void MainWindow::on_sendBtn_clicked()
 {
     QString str = ui->sendEdit->toPlainText();
     if(!str.isEmpty()) {
-        webBridge->sendMsgToJs(str);
+        apiRouter->sendMsgToClient(str);
         ui->sendEdit->setText("");
         QString history = ui->msgBrowser->toPlainText();
         QString time = QDate::currentDate().toString("yyyy-MM-dd ") + QTime::currentTime().toString("HH:mm:ss");

@@ -16,15 +16,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    apirouter.cpp \
     devwindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    webbridge.cpp
+    worker.cpp
 
 HEADERS += \
+    apirouter.h \
     devwindow.h \
     mainwindow.h \
-    webbridge.h
+    worker.h
 
 FORMS += \
     devwindow.ui \

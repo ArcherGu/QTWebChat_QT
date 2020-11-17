@@ -5,7 +5,8 @@
 #include <QWebEngineView>
 #include <QSerialPort>
 #include "devwindow.h"
-#include "webbridge.h"
+#include "apirouter.h"
+#include "worker.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,6 +22,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent *);
     void initWebEngine();
+    void initWorkerThread();
     void initDevToolWindow();
     void initSerialPort();
 private slots:
@@ -32,7 +34,9 @@ private:
     Ui::MainWindow* ui;
     QWebEngineView* web;
     DevWindow* devWindow = NULL;
-    WebBridge* webBridge;
+    ApiRouter* apiRouter;
+    Worker* worker;
+    QThread* threadWorker;
     QWebChannel* channel;
     QSerialPort* serial;
 };
